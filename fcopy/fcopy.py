@@ -63,16 +63,17 @@ def getConfig():
         print('There was an error reading the configuration file')
     return False
 
-def copyFile(source, destination):
-    operation = "Updated" if os.path.exists(destination) else "Copied"
-    if exists(source):
+def copyFile(source, destination, isWatch=False):
+    operation = "Updated" if os.path.exists(destination["path"]) else "Copied"
+    key = "path" if isWatch else "file"
+    if exists(source["path"]):
         try:
-            shutil.copyfile(source, destination)  
-            print("{}: {} => {}".format(operation, source, destination))
+            shutil.copyfile(source["path"], destination["path"])  
+            print("{}: {} => {}".format(operation, source[key], destination[key]))
         except shutil.SameFileError:
             pass
         except FileNotFoundError:
-            print('Path {} is incorrect'.format(destination))
+            print('Path {} is incorrect'.format(destination[key]))
 
 def update(tasklist, watcher=False, type="group"):
     config = getConfig()
@@ -89,24 +90,35 @@ def update(tasklist, watcher=False, type="group"):
             dest = task["target-path"]
 
             if (exists(src) and exists(dest)):
+                print("{} => {}".format(src, dest))
                 for fi in task["files"]:
-                    source_file = os.path.join(src, fi["name"])
-                    dest_file = os.path.join(dest, fi["as"])
+                    source_file = {
+                        "base": src,
+                        "path": os.path.join(src, fi["name"]),
+                        "file": fi["name"]
+                    } 
+                    dest_file = { 
+                        "base": dest,
+                        "path": os.path.join(dest, fi["as"]),
+                        "file": fi["as"]
+                    } 
                     copyFile(source_file, dest_file)
                     watchlist.append({
                         "src": source_file,
                         "dest": dest_file
                     })
+                print()
             
                 if watcher:
+                    print("Watching for changes (Hold Ctrl+C to exit)...")
                     watch()
 
 def watch():
     threading.Timer(1, watch).start()
     to_update = []
     for conf in watchlist:
-        src = conf["src"]
-        dest = conf["dest"]
+        src = conf["src"]["path"]
+        dest = conf["dest"]["path"]
         src_time = os.stat(src).st_mtime if exists(src, False) else 0
         dest_time = os.stat(dest).st_mtime if exists(dest, False) else 0
         if src_time > dest_time:
@@ -114,10 +126,11 @@ def watch():
 
     if len(to_update) > 0:
         print()
-        print("Update: ", datetime.now().strftime("%A, %d. %B %Y %I:%M%:S%p"))
+        print("Update: ", datetime.now().strftime("%A, %d. %B %Y %I:%M:%S%p"))
         for conf in to_update:
-                copyFile(conf["src"], conf["dest"])
-
+                copyFile(conf["src"], conf["dest"], True)
+        print()
+        print("Watching for changes (Hold Ctrl+C to exit)...")
 
 def updateConfigPath(new_config):
     fconf = open(module_config, 'w')
