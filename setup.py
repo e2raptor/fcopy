@@ -13,7 +13,7 @@ For complete documentation please visit the project page on `GitHub <https://git
 
     url='https://github.com/e2raptor/fcopy',
 
-    author='Eduardo Piña Fonseca',
+    author='Eduardo Pina Fonseca',
 	author_email='epinaster@gmail.com',
 
     license='MIT',
