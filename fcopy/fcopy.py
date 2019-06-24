@@ -4,7 +4,7 @@ Copy utility .
 
 Homepage: https://github.com/e2raptor/fcopy
 
-Copyright (C) 2019 Eduardo Piña Fonseca
+Copyright (C) 2019 Eduardo Pina Fonseca
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -66,8 +66,13 @@ def getConfig():
 def copyFile(source, destination):
     operation = "Updated" if os.path.exists(destination) else "Copied"
     if exists(source):
-        shutil.copyfile(source, destination)  
-        print("{}: {} => {}".format(operation, source, destination))
+        try:
+            shutil.copyfile(source, destination)  
+            print("{}: {} => {}".format(operation, source, destination))
+        except shutil.SameFileError:
+            pass
+        except FileNotFoundError:
+            print('Path {} is incorrect'.format(destination))
 
 def update(tasklist, watcher=False, type="group"):
     config = getConfig()
