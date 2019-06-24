@@ -31,7 +31,7 @@ from datetime import datetime
 '''
 The version of this script as an int tuple (major, minor, patch).
 '''
-__version__ = (0, 1, 0)
+__version__ = (0, 1, 1)
 __version_str__ = '.'.join([str(__version__[0]), str(__version__[1]), str(__version__[2])])
 
 
