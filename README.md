@@ -68,7 +68,7 @@ Is a list of files where each file configuration has the name (just as it is in 
 
 
 ## Watching the file
-To avoid executing the fcopy command everytime, we can start it with `-w` and it will keep watching the specified tasks (or group of tasks) for changes. It will automatically update only the file or files that have changed within the watched tasks. 
+To avoid executing the fcopy command everytime, we can run it with `-w` and it will keep watching the specified tasks (or group of tasks) for changes. It will automatically update only the file or files that have changed within the watched tasks. 
 
 
 ```bash
@@ -81,6 +81,12 @@ The configuration has to be specified only the first time or if we changed the l
 
 ```bash
 fcopy -c /path/to/conf.json
+```
+
+## List task in configuration file
+
+```bash
+fcopy -l
 ```
 
 

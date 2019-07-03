@@ -31,7 +31,7 @@ from datetime import datetime
 '''
 The version of this script as an int tuple (major, minor, patch).
 '''
-__version__ = (0, 1, 1)
+__version__ = (0, 1, 2)
 __version_str__ = '.'.join([str(__version__[0]), str(__version__[1]), str(__version__[2])])
 
 
@@ -136,3 +136,12 @@ def updateConfigPath(new_config):
     fconf = open(module_config, 'w')
     fconf.write(new_config)
     fconf.close
+
+def listTasks():
+    config = getConfig()
+    index = 1
+
+    if config:
+        for task in config:
+            print("{} - {} ({})".format(str(index), task["name"], task["group"]))
+            index += 1
