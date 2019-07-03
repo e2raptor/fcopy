@@ -54,7 +54,7 @@ This will execute only the tasks named "task-1" and "task-2"
 The group of the task. Many task may belong to the same group. By specifying the group, fcopy will execute every task that belongs to that group
 
 ```bash
-fcopy -t group-1
+fcopy -g group-1
 ```
 
 Many groups can be specified
