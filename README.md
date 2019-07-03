@@ -33,8 +33,7 @@ Fcopy reads the configuration from a json file previously specified. The json fi
                 "name": "build/file-2.txt", 
                 "as": "dest-3/file-2.txt" 
         }]
-    },
-    { ... }
+    }
 ]
 ```
 
@@ -64,11 +63,11 @@ Many groups can be specified
 These are the base path for the source files and destination files respectively. Maybe most of the files are under the same (or a generic) path. So it is easier to specify it only once.
 
 #### files
-Is a list of files where each file configuration has the name (just as it is in the file system) and the property "as" which specifies where and under which name is going to be copied. 
+Is a list of files where each file configuration has the name (just as it is in the file system) and the property "as" which specifies where and under what name is going to be copied. 
 
 
 ## Watching the file
-To avoid executing the fcopy command everytime, we can run it with `-w` and it will keep watching the specified tasks (or group of tasks) for changes. It will automatically update only the file or files that have changed within the watched tasks. 
+To avoid executing the fcopy command everytime, we can run it with `-w` and it will keep watching the specified tasks (or group of tasks) for changes. It will automatically update only the files that have changed within the watched tasks. 
 
 
 ```bash
@@ -77,13 +76,13 @@ fcopy -t task-1 -w
 
 ## Updating the configuration
 
-The configuration has to be specified only the first time or if we changed the location of the json file.
+The configuration has to be specified only the first time or if we have changed the location of the json file.
 
 ```bash
 fcopy -c /path/to/conf.json
 ```
 
-## List task in configuration file
+## List tasks in configuration file
 
 ```bash
 fcopy -l
